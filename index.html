@@ -1,163 +1,143 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mi Sitio Creativo</title>
-  <style>
-    /* Reset básico */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phantm 404</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-    body {
-      font-family: 'Arial', sans-serif;
-      background-color: #0b0b0b;
-      color: #f0f0f0;
-      line-height: 1.6;
-    }
+body {
+  margin: 0;
+  height: 100vh;
+  background-color: black;
+  font-family: 'Press Start 2P', cursive;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #00ff00;
+  overflow: hidden;
+}
 
-    header {
-      background-color: #111;
-      text-align: center;
-      padding: 2rem 1rem;
-    }
+.tv-container {
+  position: relative;
+  width: 600px;
+  height: 400px;
+  border: 12px solid #00ff00;
+  border-radius: 20px;
+  box-shadow: 0 0 30px #00ff00;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: black;
+}
 
-    header h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-      color: #00ff99;
-      letter-spacing: 2px;
-    }
+.tv-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 50px;
+  z-index: 2;
+}
 
-    nav ul {
-      list-style: none;
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-    }
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 60px;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s;
+  z-index: 3;
+}
 
-    nav ul li a {
-      color: #00ff99;
-      text-decoration: none;
-      font-weight: bold;
-      transition: color 0.3s;
-    }
+.arrow:hover {
+  color: #ffffff;
+}
 
-    nav ul li a:hover {
-      color: #fff;
-    }
+.arrow-left { left: 10px; }
+.arrow-right { right: 10px; }
 
-    main {
-      padding: 2rem;
-    }
-
-    section {
-      margin-bottom: 3rem;
-      text-align: center;
-    }
-
-    section h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      color: #00ff99;
-    }
-
-    section p {
-      font-size: 1.1rem;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .galeria {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-
-    .galeria img {
-      width: 300px;
-      height: 200px;
-      object-fit: cover;
-      border: 2px solid #00ff99;
-      border-radius: 6px;
-      transition: transform 0.3s;
-    }
-
-    .galeria img:hover {
-      transform: scale(1.05);
-    }
-
-    footer {
-      background-color: #111;
-      color: #00ff99;
-      text-align: center;
-      padding: 1rem;
-    }
-
-    /* Botón estilo hacker */
-    .boton {
-      display: inline-block;
-      padding: 0.8rem 1.5rem;
-      background-color: #00ff99;
-      color: #0b0b0b;
-      font-weight: bold;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background 0.3s;
-      margin-top: 1rem;
-      text-decoration: none;
-    }
-
-    .boton:hover {
-      background-color: #00cc77;
-    }
-
-  </style>
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+</style>
 </head>
 <body>
 
-  <header>
-    <h1>Mi Sitio Creativo</h1>
-    <nav>
-      <ul>
-        <li><a href="#inicio">Inicio</a></li>
-        <li><a href="#galeria">Galería</a></li>
-        <li><a href="#contacto">Contacto</a></li>
-      </ul>
-    </nav>
-  </header>
+<div class="tv-container">
+  <div class="arrow arrow-left" onclick="prevChannel()">&lt;</div>
+  <div class="tv-screen" id="tv-screen">phantm 404</div>
+  <div class="arrow arrow-right" onclick="nextChannel()">&gt;</div>
+  <canvas id="noise"></canvas>
+</div>
 
-  <main>
-    <section id="inicio">
-      <h2>Bienvenido</h2>
-      <p>Este es un sitio recreado para verse igual que el original, pero completamente independiente y sin logos de Universe.</p>
-      <a href="#galeria" class="boton">Ver Galería</a>
-    </section>
+<script>
+const channels = [
+  { title: "001 music", link: "https://open.spotify.com/artist/7iN7TghMjGHXlBJ2wJJXXt?si=yEwFVYIWTiqOT3de-9FwQQ" },
+  { title: "002 error", link: null }
+];
 
-    <section id="galeria">
-      <h2>Galería</h2>
-      <div class="galeria">
-        <img src="https://via.placeholder.com/300x200?text=Imagen+1" alt="Imagen 1">
-        <img src="https://via.placeholder.com/300x200?text=Imagen+2" alt="Imagen 2">
-        <img src="https://via.placeholder.com/300x200?text=Imagen+3" alt="Imagen 3">
-      </div>
-    </section>
+let currentChannel = -1; // -1 es el inicio "phantm 404"
 
-    <section id="contacto">
-      <h2>Contacto</h2>
-      <p>Escríbeme a <a href="mailto:contacto@misitio.com" class="boton">contacto@misitio.com</a></p>
-    </section>
-  </main>
+function updateChannel() {
+  const screen = document.getElementById('tv-screen');
+  if (currentChannel === -1) {
+    screen.innerHTML = 'phantm 404';
+  } else {
+    const ch = channels[currentChannel];
+    if (ch.link) {
+      screen.innerHTML = `<a href="${ch.link}" target="_blank" style="color:#00ff00;text-decoration:none;">${ch.title}</a>`;
+    } else {
+      screen.innerHTML = ch.title;
+    }
+  }
+}
 
-  <footer>
-    &copy; 2025 Mi Sitio Creativo
-  </footer>
+function nextChannel() {
+  currentChannel++;
+  if (currentChannel >= channels.length) currentChannel = -1;
+  updateChannel();
+}
+
+function prevChannel() {
+  currentChannel--;
+  if (currentChannel < -1) currentChannel = channels.length - 1;
+  updateChannel();
+}
+
+// Televisor roto con ruido real
+const canvas = document.getElementById('noise');
+const ctx = canvas.getContext('2d');
+canvas.width = canvas.offsetWidth;
+canvas.height = canvas.offsetHeight;
+
+function drawNoise() {
+  const imageData = ctx.createImageData(canvas.width, canvas.height);
+  for(let i = 0; i < imageData.data.length; i += 4){
+    const v = Math.random() < 0.02 ? 255 : 0; // píxeles aleatorios
+    imageData.data[i] = 0;      // R
+    imageData.data[i+1] = v;    // G
+    imageData.data[i+2] = 0;    // B
+    imageData.data[i+3] = 255;  // A
+  }
+  ctx.putImageData(imageData, 0, 0);
+  requestAnimationFrame(drawNoise);
+}
+
+drawNoise();
+updateChannel();
+</script>
 
 </body>
 </html>
